@@ -27,7 +27,7 @@
 
 if(isset($_POST["register"]))
 {
-	require_once 'database.php';
+	require_once('database.php');
 	$first_name = $_POST["first_name"];
 	$last_name = $_POST["last_name"];
 	$username = $_POST["username"];
@@ -49,7 +49,7 @@ if(isset($_POST["register"]))
 	 }
 	 //check username
 	 else{
-		$conn = getConnection($local = true);
+		$conn = getConnection($local = false);
 		$query = "SELECT username FROM student WHERE username = '{$username}'";
 		$result = mysqli_query($conn, $query);
 		if(mysqli_num_rows($result) > 0){
@@ -73,4 +73,5 @@ if(isset($_POST["register"]))
 	 }
 
 }
+
 ?>

@@ -2,7 +2,7 @@
 
 function getConnection(bool $local): mysqli
 {
-    $local ? require_once 'local_access.php' : require_once 'access.php';
+    $local ? require_once('local_access.php') : require_once('access.php');
     $conn = new mysqli(hostname:$hostname,username: $username,password: $password,database: $db,port: $port);
     
     if (!$conn)
