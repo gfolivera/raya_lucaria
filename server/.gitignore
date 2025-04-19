@@ -1,0 +1,4 @@
+#ignore db access data
+access.*
+local_access.*
+
