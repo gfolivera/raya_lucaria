@@ -49,20 +49,24 @@ if(isset($_POST["register"]))
 	 }
 	 //check username
 	 else{
-		$conn = getConnection($local = false);
-		$query = "SELECT username FROM student WHERE username = '{$username}'";
-		$result = mysqli_query($conn, $query);
+		$conn = getConnection($local = true);
+		$stmt = $conn->prepare("SELECT username FROM student WHERE username = ?");
+		$stmt->bind_param("s",$username);
+		$stmt->execute();
+		$result = $stmt->get_result();
 		if(mysqli_num_rows($result) > 0){
 			echo "username already taken.";
 		}
 		//insert into table
 		else{ 
-			$query = "INSERT INTO student
+			$stmt = $conn->prepare("INSERT INTO student
 							(first_name, last_name, username, password, created_at)
 						VALUES
-							('{$first_name}','{$last_name}','{$username}','{$password}', NOW())";
+							(?,?,?,?, NOW())");
 			try{
-					$result = mysqli_query($conn, $query);
+				$stmt->bind_param("ssss",$first_name,$last_name,$username,$password);
+				$stmt->execute();
+				echo "{$stmt->affected_rows} rows affected.";
 			}catch(Exception $e){
 				echo $e->getMessage();
 			}
@@ -73,5 +77,7 @@ if(isset($_POST["register"]))
 	 }
 
 }
+
+//C:\Program Files\MySQL\MySQL Server 8.0\bin
 
 ?>
