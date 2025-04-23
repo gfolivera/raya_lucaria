@@ -1,18 +1,13 @@
-import { Link } from "react-router-dom";
+import * as S from "../pages/style";
 
 function Navbar() {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/user/create">Create User</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
-      </nav>
+      <S.Nav>
+        <S.StyledLink to="/user/create">Criar usuário</S.StyledLink>
+        <S.StyledLink to="/login">Login</S.StyledLink>
+        <S.StyledLink to="/courses">Cursos</S.StyledLink>
+      </S.Nav>
     </>
   );
 }

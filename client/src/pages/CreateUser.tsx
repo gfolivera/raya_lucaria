@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import * as S from "./style";
 
 interface UserFormState {
   first_name: string;
@@ -25,7 +26,18 @@ function CreateUser() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://rayalucaria.free.nf/register.php"
+        "/api/register.php", //http://localhost:5500/api/register.php
+        {
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          username: formData.username,
+          password: formData.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log(response); // PHP api call
     } catch (error) {
@@ -34,9 +46,9 @@ function CreateUser() {
   };
 
   return (
-    <div className="CreateUser">
-      <h2>Create User</h2>
-      <form onSubmit={handleSubmit}>
+    <S.Container>
+      <S.FormContainer onSubmit={handleSubmit}>
+        <S.h2>Criar usuário</S.h2>
         <table cellSpacing={10}>
           <tbody>
             <tr>
@@ -123,15 +135,13 @@ function CreateUser() {
                 />
               </td>
             </tr>
-            <tr>
-              <td>
-                <input type="submit" name="submit" />
-              </td>
-            </tr>
           </tbody>
         </table>
-      </form>
-    </div>
+        <S.Button type="submit" name="submit">
+          Cadastrar
+        </S.Button>
+      </S.FormContainer>
+    </S.Container>
   );
 }
 
