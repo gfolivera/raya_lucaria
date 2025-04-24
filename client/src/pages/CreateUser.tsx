@@ -23,8 +23,10 @@ function CreateUser() {
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
+    console.log("handler accessed.");
     e.preventDefault();
     try {
+      console.log("Entering AXIOS API call...");
       const response = await axios.post(
         "/api/register.php", //http://localhost:5500/api/register.php
         {
@@ -39,6 +41,7 @@ function CreateUser() {
           },
         }
       );
+      console.log("AXIOS call finished.");
       console.log(response); // PHP api call
     } catch (error) {
       console.log(error);
@@ -137,7 +140,7 @@ function CreateUser() {
             </tr>
           </tbody>
         </table>
-        <S.Button type="submit" name="submit">
+        <S.Button type="submit" name="signup_submit">
           Cadastrar
         </S.Button>
       </S.FormContainer>

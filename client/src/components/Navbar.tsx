@@ -4,6 +4,7 @@ function Navbar() {
   return (
     <>
       <S.Nav>
+        <S.StyledLink to="/">Home</S.StyledLink>
         <S.StyledLink to="/user/create">Criar usuário</S.StyledLink>
         <S.StyledLink to="/login">Login</S.StyledLink>
         <S.StyledLink to="/courses">Cursos</S.StyledLink>

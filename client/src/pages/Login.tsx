@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./style";
 import axios from "axios";
 
@@ -7,13 +7,29 @@ interface UserAuthState {
   password: string;
 }
 
+interface UserLoggedState {
+  logged_username: string;
+  first_name: string;
+  last_name: string;
+}
+
 function Login() {
   const [authData, setAuthData] = useState<UserAuthState>({
     username: "",
     password: "",
   });
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserLoggedState>({
+    logged_username: "",
+    first_name: "",
+    last_name: "",
+  });
+
+  const [showHello, setShowHello] = useState(false);
+  const placeholder = "Visitor";
+  useEffect(() => {
+    setShowHello(!showHello);
+  }, [user.first_name]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,6 +37,7 @@ function Login() {
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
+    console.log(authData);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -35,13 +52,19 @@ function Login() {
           },
         }
       );
+      console.log("full response: ", response);
       const userData = response.data.user;
-      setUser(userData);
-      console.log("Logged in:", user);
+      console.log("userData: ", userData);
+      setUser({
+        logged_username: userData.username,
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+      });
+      console.log("Logged in:", userData.first_name);
       // Optionally save to localStorage
       localStorage.setItem("user", JSON.stringify(userData));
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.response.data);
     }
   };
 
@@ -70,6 +93,13 @@ function Login() {
         <S.Button type="submit" name="submit">
           Login
         </S.Button>
+        {showHello ? (
+          <div id="hello">
+            <S.h2>
+              Hello, {user.first_name != "" ? user.first_name : placeholder}!
+            </S.h2>
+          </div>
+        ) : null}
       </S.FormContainer>
     </S.Container>
   );

@@ -1,5 +1,7 @@
+import * as S from "./style";
+
 function Home() {
-  return <h1>Home Page</h1>;
+  return <S.h1>Home Page</S.h1>;
 }
 
 export default Home;
