@@ -51,7 +51,7 @@ function CreateUser() {
   return (
     <S.Container>
       <S.FormContainer onSubmit={handleSubmit}>
-        <S.h2>Criar usuário</S.h2>
+        <S.Heading2>Criar usuário</S.Heading2>
         <table cellSpacing={10}>
           <tbody>
             <tr>
@@ -140,9 +140,9 @@ function CreateUser() {
             </tr>
           </tbody>
         </table>
-        <S.Button type="submit" name="signup_submit">
+        <S.StyledButton type="submit" name="signup_submit">
           Cadastrar
-        </S.Button>
+        </S.StyledButton>
       </S.FormContainer>
     </S.Container>
   );

@@ -1,7 +1,7 @@
 import * as S from "./style";
 
 function Home() {
-  return <S.h1>Home Page</S.h1>;
+  return <S.Heading1>Home Page</S.Heading1>;
 }
 
 export default Home;

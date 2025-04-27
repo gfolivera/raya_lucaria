@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 // NAVBAR
 
-export const Nav = styled.nav`
+export const StyledNav = styled.nav`
     border-radius: 3px;
     background-color: rgba(31, 18, 3, 0.65);
     color: white;
@@ -22,7 +22,7 @@ export const StyledLink  = styled(Link)`
 
 // SIDEBAR
 
-export const SidebarContainer = styled.aside`
+export const SidebarContainer = styled.ul`
     width: 250px;
     background-color: #2c2c2c;
     padding: 20px;
@@ -34,9 +34,10 @@ export const SidebarContainer = styled.aside`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    list-style-type: none;
 `;
 
-export const SidebarContent = styled.div`
+export const SidebarContent = styled.li`
     background-color:rgb(167, 167, 167);
     width: 220px;
     margin: 5px;
@@ -45,7 +46,7 @@ export const SidebarContent = styled.div`
     cursor: pointer;
 `;
 
-export const SidebarNestedContent = styled.div`
+export const SidebarNestedContent = styled.li`
     background-color:rgb(119, 119, 119);
     width: 200px;
     margin: 5px;
@@ -104,7 +105,7 @@ export const FormContainer = styled.form`
     padding: 40px 30px;
 `;
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
 //padding: .5em;
 color: white;
 background-color:var(--bg_btn);
@@ -115,13 +116,13 @@ align-items: center;
 display: flex;
 `;
 
-export const h1 = styled.h1`
+export const Heading1 = styled.h1`
 display: flex;
 justify-content: center;
 `;
 
 
-export const h2 = styled.h2`
+export const Heading2 = styled.h2`
 display: flex;
 justify-content: center;
 z-index: 10;

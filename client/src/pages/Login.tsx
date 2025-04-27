@@ -36,9 +36,9 @@ function Login() {
     setAuthData((previousData) => ({ ...previousData, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     console.log(authData);
-    e.preventDefault();
+    event.preventDefault();
     try {
       const response = await axios.post(
         "/api/auth.php", //http://localhost:5500/api/register.php
@@ -71,7 +71,7 @@ function Login() {
   return (
     <S.Container>
       <S.FormContainer onSubmit={handleSubmit}>
-        <S.h2>Login</S.h2>
+        <S.Heading2>Login</S.Heading2>
         <table>
           <tr>
             <th>
@@ -90,14 +90,14 @@ function Login() {
             </td>
           </tr>
         </table>
-        <S.Button type="submit" name="submit">
+        <S.StyledButton type="submit" name="submit">
           Login
-        </S.Button>
+        </S.StyledButton>
         {showHello ? (
           <div id="hello">
-            <S.h2>
+            <S.Heading2>
               Hello, {user.first_name != "" ? user.first_name : placeholder}!
-            </S.h2>
+            </S.Heading2>
           </div>
         ) : null}
       </S.FormContainer>
