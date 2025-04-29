@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./style";
+import { Navigate } from "react-router-dom";
 
 interface UserFormState {
   first_name: string;
@@ -19,6 +20,8 @@ function CreateUser() {
     repeat_password: "",
   });
 
+  const [formError, setFormError] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((previousData) => ({ ...previousData, [name]: value }));
@@ -27,28 +30,39 @@ function CreateUser() {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     console.log("handler accessed.");
     e.preventDefault();
-    try {
-      console.log("Entering AXIOS API call...");
-      const response = await axios.post(
-        "/api/register.php", //http://localhost:5500/api/register.php
-        {
-          first_name: formData.first_name,
-          last_name: formData.last_name,
-          username: formData.username,
-          password: formData.password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+    if (formData.password === formData.repeat_password) {
+      try {
+        console.log("Entering AXIOS API call...");
+        const response = await axios.post(
+          "/api/register.php", //http://localhost:5500/api/register.php
+          {
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            username: formData.username,
+            password: formData.password,
           },
-        }
-      );
-      console.log("AXIOS call finished.");
-      console.log(response); // PHP api call
-    } catch (error) {
-      console.log(error);
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("AXIOS call finished.");
+        console.log(response); // PHP api call
+        return <Navigate to="/login" />;
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setFormError(true);
     }
   };
+
+  useEffect(() => {
+    if (formData.password === formData.repeat_password) {
+      setFormError(false);
+    }
+  }, [formData.password, formData.repeat_password]);
 
   return (
     <S.Container>
@@ -138,6 +152,11 @@ function CreateUser() {
                   required
                   maxLength={12}
                 />
+                {formError ? (
+                  <p color="red">
+                    Senha e Confirmar Senha precisam ser iguais.
+                  </p>
+                ) : null}
               </td>
             </tr>
           </tbody>

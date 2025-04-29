@@ -1,10 +1,12 @@
-//import * as S from "./style";
+import * as S from "./style";
 //import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 //import SidebarElement from "../components/SidebarElement";
+import { useUser } from "../components/UserContext";
 
 interface Course {
+  course_id: number;
   course_name: string;
   teacher_name: string;
   category: string;
@@ -19,8 +21,12 @@ interface Campus {
 }
 
 function Courses() {
+  const { user } = useUser();
+  console.log(user?.first_name);
+
   const [campi, setCampi] = useState<Campus[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [enrollButtonState, setEnrollButtonState] = useState(false);
 
   // API CALL
   useEffect(() => {
@@ -41,10 +47,36 @@ function Courses() {
     };
 
     fetchCampi();
+
+    if (user) {
+      setEnrollButtonState(true);
+    }
   }, []);
+
+  useEffect(() => {
+    user ? setEnrollButtonState(true) : setEnrollButtonState(false);
+  }, [user]);
 
   const handleCourseClick = (course: Course) => {
     setSelectedCourse(course);
+  };
+
+  const handleEnroll = async (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    const response = await axios.post(
+      "/api/courses.php",
+      {
+        username: user?.username,
+        course_id: selectedCourse?.course_id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("AXIOS call finished.");
+    console.log(response.data.status);
   };
 
   return (
@@ -96,6 +128,15 @@ function Courses() {
             <p>
               <strong>Carga Horária:</strong> {selectedCourse.total_hours} horas
             </p>
+            {enrollButtonState ? (
+              <S.StyledButton
+                onClick={(event) => {
+                  handleEnroll(event);
+                }}
+              >
+                Inscrever-se
+              </S.StyledButton>
+            ) : null}
           </div>
         ) : (
           <p>Selecione um curso para ver os detalhes.</p>

@@ -6,9 +6,10 @@ import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import { useEffect, useState } from "react";
 import Profile from "./pages/Profile";
+import UserContext from "./components/UserContext";
 
 interface UserLoggedState {
-  logged_username: string;
+  username: string;
   first_name: string;
   last_name: string;
 }
@@ -31,17 +32,20 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="user/create" element={<CreateUser />} />
-        {user ? (
-          <Route path="/profile" element={<Profile />} />
-        ) : (
-          <Route path="/login" element={<Login />} />
-        )}
-
-        <Route path="/courses" element={<Courses />} />
-      </Routes>
+      <UserContext>
+        <Routes>
+          <Route index element={<Home />} />
+          {user ? (
+            <Route path="/profile" element={<Profile />} />
+          ) : (
+            <>
+              <Route path="/login" element={<Login />} />
+              <Route path="user/create" element={<CreateUser />} />
+            </>
+          )}
+          <Route path="/courses" element={<Courses />} />
+        </Routes>
+      </UserContext>
     </>
   );
 }

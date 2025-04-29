@@ -19,6 +19,7 @@ elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
     $stmt = $conn->prepare(
                 "SELECT 
                 campus.name as campus_name,
+                course.id as course_id,
                 course.name as course_name,
                 teacher.name as teacher_name,
                 course.category,
@@ -30,7 +31,7 @@ elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
                 course.campus_id = campus.id
                 INNER JOIN teacher ON
                 course.teacher_id = teacher.id
-                ORDER BY campus.name ASC
+                ORDER BY campus.name DESC, category ASC
                 ");
     $stmt->execute();
     $result = $stmt->get_result();
@@ -41,6 +42,7 @@ elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
     while (!empty($row)) {
         $course = array();
         //$course["campus_name"] = $row["campus_name"];
+        $course["course_id"] = $row["course_id"];
         $course["course_name"] = $row["course_name"];
         $course["teacher_name"] = $row["teacher_name"];
         $course["category"] = $row["category"];
@@ -73,6 +75,34 @@ elseif($_SERVER['REQUEST_METHOD'] === 'GET'){
     );
     
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);  
+}elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
+	$requestData = json_decode(file_get_contents('php://input'));
+    require_once('../database.php');
+    $conn = getConnection($local = false);
+    $conn->set_charset("utf8mb4");
+    $stmt = $conn->prepare(
+                "INSERT INTO if0_38774699_raya_lucaria.enroll
+                (student_username, course_id, enrolled_at, remaining_hours, concluded)
+                VALUES
+                (?, ?, NOW(), (SELECT course.total_hours FROM course where course.id = ?), false)"
+                );
+    $stmt->bind_param("sss",$requestData->username,$requestData->course_id,$requestData->course_id);
+    try{
+        $stmt->execute();
+        echo json_encode([
+            "status" => "success"
+            ]
+        );
+        $conn->close();
+        exit();
+    }catch(Exception $e){
+        http_response_code(401);
+    echo json_encode([
+            "status" => "error",
+            "message" => $e->getMessage()]);
+        $conn->close();
+        exit();
+    }
 }
 
 ?>

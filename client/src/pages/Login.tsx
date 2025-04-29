@@ -37,7 +37,6 @@ function Login() {
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    console.log(authData);
     event.preventDefault();
     try {
       const response = await axios.post(
