@@ -7,6 +7,7 @@ interface UserFormState {
   last_name: string;
   username: string;
   password: string;
+  repeat_password: string;
 }
 
 function CreateUser() {
@@ -15,6 +16,7 @@ function CreateUser() {
     last_name: "",
     username: "",
     password: "",
+    repeat_password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

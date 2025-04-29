@@ -108,12 +108,20 @@ export const FormContainer = styled.form`
 export const StyledButton = styled.button`
 //padding: .5em;
 color: white;
-background-color:var(--bg_btn);
+background-color:var(--btn_bg);
 width: 5em;
 height: 2em;
 justify-content: center;
 align-items: center;
 display: flex;
+
+&:hover{
+    background-color:rgb(31, 63, 124);
+}
+
+&:active{
+    background-color:rgb(20, 87, 150);
+}
 `;
 
 export const Heading1 = styled.h1`
@@ -134,7 +142,7 @@ export const Greet = styled.div`
 width: 100px;
 height: 75px;
 border-radius: 8px;
-background-color: rgb(65, 56, 56);
+background-color: var(--div_bg);
 color: white;
 `;
 

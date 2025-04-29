@@ -99,7 +99,11 @@ function Login() {
               Hello, {user.first_name != "" ? user.first_name : placeholder}!
             </S.Heading2>
           </div>
-        ) : null}
+        ) : (
+          <S.Greet id="hello">
+            <S.Heading2>Hello, {user.first_name}!</S.Heading2>
+          </S.Greet>
+        )}
       </S.FormContainer>
     </S.Container>
   );

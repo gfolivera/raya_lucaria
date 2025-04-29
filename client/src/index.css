@@ -9,6 +9,7 @@
 
 :root {
   --bg : rgb(43, 50, 68);
+  --div_bg: rgb(89, 117, 141);
   --btn_bg: rgba(10,10,10,.7);
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
