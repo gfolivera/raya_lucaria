@@ -42,46 +42,47 @@ elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
         $stmt->execute();
         $result = $stmt->get_result();
         $row = mysqli_fetch_array($result);
-    $campus_name = $row["campus_name"];
-    $courses = array();
-    $campi = array();
-    while (!empty($row)) {
-        $course = array();
-        //$course["campus_name"] = $row["campus_name"];
-        $course["course_id"] = $row["course_id"];
-        $course["course_name"] = $row["course_name"];
-        $course["teacher_name"] = $row["teacher_name"];
-        $course["category"] = $row["category"];
-        $course["description"] = $row["description"];
-        $course["spells"] = $row["spells"];
-        $course["remaining_hours"] = $row["remaining_hours"];
-        $course["total_hours"] = $row["total_hours"];
-        $course["concluded"] = $row["concluded"];
-        $course["enrolled_at"] = $row["enrolled_at"];
-        $courses[] = $course;
-        $row = mysqli_fetch_array($result);
-        if(!empty($row)){
-            if(strcmp($campus_name, $row["campus_name"]) != 0){
+        if(isset($row)){
+            $campus_name = $row["campus_name"];
+        }
+        $courses = array();
+        $campi = array();
+        while (!empty($row)) {
+            $course = array();
+            //$course["campus_name"] = $row["campus_name"];
+            $course["course_id"] = $row["course_id"];
+            $course["course_name"] = $row["course_name"];
+            $course["teacher_name"] = $row["teacher_name"];
+            $course["category"] = $row["category"];
+            $course["description"] = $row["description"];
+            $course["spells"] = $row["spells"];
+            $course["remaining_hours"] = $row["remaining_hours"];
+            $course["total_hours"] = $row["total_hours"];
+            $course["concluded"] = $row["concluded"];
+            $course["enrolled_at"] = $row["enrolled_at"];
+            $courses[] = $course;
+            $row = mysqli_fetch_array($result);
+            if(!empty($row)){
+                if(strcmp($campus_name, $row["campus_name"]) != 0){
+                    $campi[] = array(
+                        'campus_name'   => $campus_name,
+                        'courses' => $courses
+                    );
+                    $campus_name = $row["campus_name"];
+                    $courses = array();
+            }
+            }else {
                 $campi[] = array(
-                    'campus_name'   => $campus_name,
-                    'courses' => $courses
+                'campus_name'   => $campus_name,
+                'courses' => $courses
                 );
-                $campus_name = $row["campus_name"];
-                $courses = array();
-        }
-        }else {
-            $campi[] = array(
-            'campus_name'   => $campus_name,
-            'courses' => $courses
-            );
 
+            }
         }
-    }
-    
-    $data = array(
-        'status'   => "success",
-        'campi' => $campi
-    );
+        $data = array(
+            'status'   => "success",
+            'campi' => $campi
+        );
     
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }catch(Exception $e){

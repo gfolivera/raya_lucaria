@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import * as S from "./style";
 import axios from "axios";
+import { useUser } from "../components/UserContext";
 
 interface UserAuthState {
   username: string;
   password: string;
-}
-
-interface UserLoggedState {
-  logged_username: string;
-  first_name: string;
-  last_name: string;
 }
 
 function Login() {
@@ -19,17 +14,14 @@ function Login() {
     password: "",
   });
 
-  const [user, setUser] = useState<UserLoggedState>({
-    logged_username: "",
-    first_name: "",
-    last_name: "",
-  });
+  const { user, login } = useUser();
 
   const [showHello, setShowHello] = useState(false);
+  const [showError, setShowError] = useState(false);
   const placeholder = "Visitor";
   useEffect(() => {
-    setShowHello(!showHello);
-  }, [user.first_name]);
+    setShowHello(true);
+  }, [user?.first_name]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,16 +44,16 @@ function Login() {
         }
       );
       console.log("full response: ", response);
-      const userData = response.data.user;
-      console.log("userData: ", userData);
-      setUser({
-        logged_username: userData.username,
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-      });
-      console.log("Logged in:", userData.first_name);
-      // Optionally save to localStorage
-      localStorage.setItem("user", JSON.stringify(userData));
+      if (response.data.status == "success") {
+        const userData = response.data.user;
+        console.log("Logged in:", userData.first_name);
+        login(userData);
+      } else {
+        setShowError(true);
+      }
+
+      // Optionally save to localStorage - moved to UserContext
+      //      localStorage.setItem("user", JSON.stringify(userData));
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -95,14 +87,15 @@ function Login() {
         {showHello ? (
           <div id="hello">
             <S.Heading2>
-              Hello, {user.first_name != "" ? user.first_name : placeholder}!
+              Hello, {user?.first_name != "" ? user?.first_name : placeholder}!
             </S.Heading2>
           </div>
         ) : (
           <S.Greet id="hello">
-            <S.Heading2>Hello, {user.first_name}!</S.Heading2>
+            <S.Heading2>Hello, {user?.first_name}!</S.Heading2>
           </S.Greet>
         )}
+        {showError && <p>Usuário ou Senha incorretos.</p>}
       </S.FormContainer>
     </S.Container>
   );

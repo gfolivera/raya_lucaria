@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
+//import { Navigate } from "react-router-dom";
 
 interface User {
   first_name: string;
@@ -9,9 +10,17 @@ interface User {
 const UserContext = createContext<{
   user: User | null;
   setUser: (user: User) => void;
-}>({ user: null, setUser: () => {} });
+  logout: () => void;
+  login: (user: User) => void;
+}>({ user: null, setUser: () => {}, logout: () => {}, login: () => {} });
 
-export const useUser = () => useContext(UserContext);
+export function useUser() {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("function useUser must be used within UserProvider");
+  }
+  return context;
+}
 
 export default function UserProvider({
   children,
@@ -19,6 +28,18 @@ export default function UserProvider({
   children: React.ReactNode;
 }) {
   const [user, setUser] = useState<User | null>(null);
+
+  const logout = () => {
+    console.log("logout pressed");
+    setUser(null);
+    localStorage.removeItem("user");
+    //return <Navigate to="/login" />;
+  };
+
+  const login = (userData: User) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -28,7 +49,7 @@ export default function UserProvider({
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, logout, login }}>
       {children}
     </UserContext.Provider>
   );

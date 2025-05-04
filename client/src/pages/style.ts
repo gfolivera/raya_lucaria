@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export const StyledNav = styled.nav`
     border-radius: 3px;
-    background-color: rgba(31, 18, 3, 0.65);
+    background-color: var(--div_bg);
     color: white;
     vertical-align: text-top;
     display:flex;
@@ -16,8 +16,18 @@ export const StyledNav = styled.nav`
 
 export const StyledLink  = styled(Link)`
     color: whitesmoke;
-    margin: .5em;
-
+    margin: .15em;
+    padding: 0px 10px;
+    border-radius: 8px;
+    border: 2px solid black;
+    
+    &:hover{
+        background: linear-gradient(var(--shadow), transparent);
+        color: white;
+    }
+    &:active{
+        background-image:url("src/assets/btn_img.jpg");
+    }
 `;
 
 // SIDEBAR
@@ -95,7 +105,7 @@ export const Container = styled.div`
 export const FormContainer = styled.form`
     height: 500px;
     width: 400px;
-    background-color: var(--bg);
+    background-color: var(--div_bg);
     position: relative;
     margin: 60px auto;
     border-radius: 8px;
@@ -146,3 +156,71 @@ background-color: var(--div_bg);
 color: white;
 `;
 
+
+// profile
+
+export const Table = styled.table`
+
+border-color: rgba(10,10,10,.7);
+border-width: 2px;
+border-style: solid;
+margin: 5px;
+border-radius: 8px;
+font-size: .8em;
+text-align: center;
+
+th{
+    background:
+    linear-gradient(to bottom, var(--bg),var(--shadow));
+    padding: 5px;
+    text-align: center;
+    border-color: rgba(187, 217, 224, 0.5);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+}
+td{
+    background:
+    linear-gradient(to bottom, var(--shadow), var(--bg));
+    padding: 0;
+    font-size: inherit;
+    border-color: rgba(10,10,10,.7);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+}
+
+thead{
+    text-align: center;
+}
+
+select{
+width:100%;
+height: 100%;
+padding:0;
+background: var(--shadow);
+border-radius: 5px;
+border: 2px solid rgba(10,10,10,.7);
+option{
+    background-color: var(--shadow);
+    color: whitesmoke;
+}
+}
+
+`;
+
+export const ProfileContainer = styled.div`
+    /* height: 500px;
+    width: 800px; */
+    background-color: var(--div_bg);
+    position: relative;
+    margin: 60px auto;
+    border-radius: 8px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+`;

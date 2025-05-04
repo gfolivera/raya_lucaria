@@ -152,10 +152,12 @@ function CreateUser() {
                   required
                   maxLength={12}
                 />
+              </td>
+            </tr>
+            <tr>
+              <td>
                 {formError ? (
-                  <p color="red">
-                    Senha e Confirmar Senha precisam ser iguais.
-                  </p>
+                  <p>Senha e Confirmar Senha precisam ser iguais.</p>
                 ) : null}
               </td>
             </tr>

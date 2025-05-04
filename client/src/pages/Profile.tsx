@@ -1,11 +1,38 @@
 import * as S from "./style";
 
 import { useUser } from "../components/UserContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import TableBody from "../components/TableBody";
+import TableHeading from "../components/TableHeading";
+
+interface Course {
+  course_id: number;
+  course_name: string;
+  teacher_name: string;
+  category: string;
+  description: string;
+  spells: string;
+  remaining_hours: number;
+  total_hours: number;
+  concluded: number | boolean;
+  enrolled_at: string;
+}
+
+interface Campus {
+  campus_name: string;
+  courses: Course[];
+}
 
 function Profile() {
   const { user } = useUser();
+  const [campi, setCampi] = useState<Campus[]>([]);
+  const [loadCourses, setLoadCourses] = useState<boolean>(true);
+
+  function reload() {
+    console.log("reload required");
+    setLoadCourses(true);
+  }
 
   useEffect(() => {
     const getEnrolledCourses = async () => {
@@ -23,21 +50,38 @@ function Profile() {
       console.log(response.data.status);
       if (response.data.status == "success") {
         console.log(response.data.campi);
+        setCampi(response.data.campi);
       }
     };
 
     getEnrolledCourses();
-  }, []);
+    setLoadCourses(false);
+  }, [loadCourses]);
 
   return (
     <>
       <S.Heading2>Perfil</S.Heading2>
       <div>
         <div>
-          <p>{user?.first_name}</p>
+          <p>{`${user?.first_name} ${user?.last_name}`}</p>
+          <p>{}</p>
         </div>
         <div>
-          <p>{user?.last_name}</p>
+          <S.ProfileContainer>
+            <S.Heading2>Cursos</S.Heading2>
+            <S.Table>
+              <tbody>
+                <TableHeading />
+                {campi.map((campus) => (
+                  <TableBody
+                    courses={campus.courses}
+                    campus_name={campus.campus_name}
+                    reload={reload}
+                  ></TableBody>
+                ))}
+              </tbody>
+            </S.Table>
+          </S.ProfileContainer>
         </div>
       </div>
     </>
