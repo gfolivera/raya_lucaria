@@ -24,10 +24,10 @@ interface studyTime {
 interface Props {
   courses: Course[];
   campus_name: string;
-  reload: () => void;
+  onReload: () => void;
 }
 
-function TableBody({ courses, campus_name, reload }: Props) {
+function TableBody({ courses, campus_name, onReload }: Props) {
   const { user } = useUser();
 
   const [selectedStudyTime, setSelectedStudyTime] = useState<studyTime[]>([]);
@@ -57,7 +57,7 @@ function TableBody({ courses, campus_name, reload }: Props) {
     console.log("value changed. id: ", id);
   }
 
-  async function handleStudySubmit(event: React.MouseEvent<HTMLButtonElement>) {
+  async function handleStudy(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     const courseId = Number(event.currentTarget.name);
     const elapsedHours = selectedStudyTime.find(
@@ -83,7 +83,7 @@ function TableBody({ courses, campus_name, reload }: Props) {
       console.log(`response: ${JSON.stringify(result)}`);
       if (result.data.status === "success") {
         console.log(result.data.message);
-        reload();
+        onReload();
       } else {
         console.error(result.data.message);
       }
@@ -119,7 +119,7 @@ function TableBody({ courses, campus_name, reload }: Props) {
             study_hours={thisCourse.study_time}
             id={String(thisCourse.course.course_id)}
             handleChange={handleChange}
-            handleStudySubmit={handleStudySubmit}
+            handleStudySubmit={handleStudy}
           ></StudySelect>
         </tr>
       ))}

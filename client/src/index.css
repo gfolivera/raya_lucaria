@@ -7,10 +7,10 @@
 }
 
 :root {
+  --std_border: 1px solid rgba(255,255,255,.5);
   --bg_red: 23;
-  --div_bg_red: calc(var(--bg_red) + 6);
-  --bg : rgba(36, 62, 102, 0.5);
-  --div_bg: rgba(var(--div_bg_red), 62, 112,.45);
+  --bg : rgba(166, 190, 212, 0.5);
+  --div_bg: rgba(163, 208, 209, 0.5);
   --btn_bg: rgba(10,10,10,.7);
   --shadow: rgba(6, 8, 26, 0.7);
   font-family: "Quintessential", serif,system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -18,11 +18,13 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-image: url('./assets/raya_lucaria_bg.jpg');
-  position: absolute;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 a {

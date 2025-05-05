@@ -27,44 +27,36 @@ interface Campus {
 function Profile() {
   const { user } = useUser();
   const [campi, setCampi] = useState<Campus[]>([]);
-  const [loadCourses, setLoadCourses] = useState<boolean>(true);
 
-  function reload() {
-    console.log("reload required");
-    setLoadCourses(true);
-  }
+  const getEnrolledCourses = async () => {
+    const response = await axios.post(
+      "/api/profile.php",
+      {
+        username: user?.username,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data.status);
+    if (response.data.status == "success") {
+      console.log(response.data.campi);
+      setCampi(response.data.campi);
+    }
+  };
 
   useEffect(() => {
-    const getEnrolledCourses = async () => {
-      const response = await axios.post(
-        "/api/profile.php",
-        {
-          username: user?.username,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(response.data.status);
-      if (response.data.status == "success") {
-        console.log(response.data.campi);
-        setCampi(response.data.campi);
-      }
-    };
-
     getEnrolledCourses();
-    setLoadCourses(false);
-  }, [loadCourses]);
+  }, []);
 
   return (
     <>
       <S.Heading2>Perfil</S.Heading2>
       <div>
         <div>
-          <p>{`${user?.first_name} ${user?.last_name}`}</p>
-          <p>{}</p>
+          <S.Heading2>{`${user?.first_name} ${user?.last_name}`}</S.Heading2>
         </div>
         <div>
           <S.ProfileContainer>
@@ -76,7 +68,7 @@ function Profile() {
                   <TableBody
                     courses={campus.courses}
                     campus_name={campus.campus_name}
-                    reload={reload}
+                    onReload={getEnrolledCourses}
                   ></TableBody>
                 ))}
               </tbody>

@@ -22,7 +22,6 @@ interface Campus {
 
 function Courses() {
   const { user } = useUser();
-  console.log(user?.first_name);
 
   const [campi, setCampi] = useState<Campus[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -75,7 +74,6 @@ function Courses() {
         },
       }
     );
-    console.log("AXIOS call finished.");
     console.log(response.data.status);
   };
 

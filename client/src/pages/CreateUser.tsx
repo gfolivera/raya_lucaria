@@ -75,7 +75,7 @@ function CreateUser() {
                 <label htmlFor="first_name">Nome:</label>
               </th>
               <td>
-                <input
+                <S.TextInput
                   type="text"
                   name="first_name"
                   onChange={handleChange}
@@ -93,7 +93,7 @@ function CreateUser() {
               </th>
               <td>
                 {" "}
-                <input
+                <S.TextInput
                   type="text"
                   name="last_name"
                   onChange={handleChange}
@@ -111,7 +111,7 @@ function CreateUser() {
               </th>
               <td>
                 {" "}
-                <input
+                <S.TextInput
                   type="text"
                   name="username"
                   onChange={handleChange}
@@ -128,7 +128,7 @@ function CreateUser() {
               </th>
               <td>
                 {" "}
-                <input
+                <S.TextInput
                   type="password"
                   name="password"
                   onChange={handleChange}
@@ -145,7 +145,7 @@ function CreateUser() {
               </th>
               <td>
                 {" "}
-                <input
+                <S.TextInput
                   type="password"
                   name="repeat_password"
                   onChange={handleChange}
