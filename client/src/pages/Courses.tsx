@@ -22,7 +22,6 @@ interface Campus {
 
 function Courses() {
   const { user } = useUser();
-
   const [campi, setCampi] = useState<Campus[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [enrollButtonState, setEnrollButtonState] = useState(false);
