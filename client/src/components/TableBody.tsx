@@ -29,14 +29,17 @@ interface Props {
 
 function TableBody({ courses, campus_name, onReload }: Props) {
   const { user } = useUser();
-
+  console.log("TableBody rendered!");
   const [selectedStudyTime, setSelectedStudyTime] = useState<studyTime[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<number>(0);
 
-  const values = courses.map((thisCourse) => ({
-    course: thisCourse,
-    study_time: "0",
-  }));
+  useEffect(() => {
+    const values = courses.map((thisCourse) => ({
+      course: thisCourse,
+      study_time: "0",
+    }));
+    setSelectedStudyTime(values);
+  }, [courses]);
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const select = e.target;
@@ -91,10 +94,6 @@ function TableBody({ courses, campus_name, onReload }: Props) {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    setSelectedStudyTime(values);
-  }, []);
 
   useEffect(() => {
     const settedTime = selectedStudyTime.find(

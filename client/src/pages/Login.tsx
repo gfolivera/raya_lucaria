@@ -14,13 +14,15 @@ function Login() {
     password: "",
   });
 
-  const { user, login } = useUser();
+  const { user, login, getEnrolledCourses } = useUser();
 
-  const [showHello, setShowHello] = useState(false);
+  const [showHello, setShowHello] = useState(true);
   const [showError, setShowError] = useState(false);
   const placeholder = "Visitor";
+
   useEffect(() => {
-    setShowHello(true);
+    setShowHello(!showHello);
+    getEnrolledCourses();
   }, [user?.first_name]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,12 +92,8 @@ function Login() {
               Hello, {user?.first_name != "" ? user?.first_name : placeholder}!
             </S.Heading2>
           </div>
-        ) : (
-          <S.Greet id="hello">
-            <S.Heading2>Hello, {user?.first_name}!</S.Heading2>
-          </S.Greet>
-        )}
-        {showError && <p>Usuário ou Senha incorretos.</p>}
+        ) : null}
+        {showError ? <p>Usuário ou Senha incorretos.</p> : null}
       </S.FormContainer>
     </S.Container>
   );

@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
-
 import Profile from "./pages/Profile";
 import UserProvider from "./components/UserContext";
 
