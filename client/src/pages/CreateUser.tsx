@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as S from "./style";
-import { Navigate } from "react-router-dom";
+import MessageScreen from "../components/MessageScreen";
 
 interface UserFormState {
   first_name: string;
@@ -9,6 +9,11 @@ interface UserFormState {
   username: string;
   password: string;
   repeat_password: string;
+}
+
+interface DialogData {
+  message: string;
+  type: "success" | "error" | "inform";
 }
 
 function CreateUser() {
@@ -21,6 +26,11 @@ function CreateUser() {
   });
 
   const [formError, setFormError] = useState(false);
+  const userDialogRef = useRef<HTMLDialogElement>(null);
+  const [dialogMsg, setDialogMsg] = useState<DialogData>({
+    message: "",
+    type: "inform",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,9 +38,14 @@ function CreateUser() {
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
-    console.log("handler accessed.");
     e.preventDefault();
-    if (formData.password === formData.repeat_password) {
+    const emptyField = Object.values(formData).includes("");
+    if (emptyField) {
+      setDialogMsg({
+        type: "inform",
+        message: "Por favor, preencha todos os campos.",
+      });
+    } else if (formData.password === formData.repeat_password) {
       try {
         console.log("Entering AXIOS API call...");
         const response = await axios.post(
@@ -48,15 +63,30 @@ function CreateUser() {
           }
         );
         console.log("AXIOS call finished.");
-        console.log(response); // PHP api call
-        return <Navigate to="/login" />;
+        if (response.data.status === "success") {
+          setDialogMsg({ type: "success", message: "Cadastrado com sucesso." });
+        }
       } catch (error) {
         console.log(error);
+        setDialogMsg({ type: "error", message: "Erro ao realizar cadastro." });
       }
     } else {
       setFormError(true);
     }
   };
+
+  useEffect(() => {
+    controlDialog();
+  }, [dialogMsg]);
+
+  function controlDialog() {
+    if (!userDialogRef) {
+      return;
+    }
+    userDialogRef.current?.hasAttribute("open")
+      ? userDialogRef.current.close()
+      : userDialogRef.current?.showModal();
+  }
 
   useEffect(() => {
     if (formData.password === formData.repeat_password) {
@@ -167,6 +197,12 @@ function CreateUser() {
           Cadastrar
         </S.StyledButton>
       </S.FormContainer>
+      <MessageScreen
+        message={dialogMsg.message}
+        type={dialogMsg.type}
+        ref={userDialogRef}
+        toglleDialog={controlDialog}
+      />
     </S.Container>
   );
 }

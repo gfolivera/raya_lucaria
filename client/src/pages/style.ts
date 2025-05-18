@@ -127,6 +127,7 @@ export const FormContainer = styled.form`
     flex-direction: column;
     align-items: center;
     padding: 40px 30px;
+    border: 2px solid rgba(10,10,10,.5);
 `;
 
 export const TextInput = styled.input`
@@ -194,7 +195,6 @@ border-radius: 8px;
 font-size: .8em;
 text-align: center;
 padding: 2px;
-
 th{
     background: rgba(10,10,10,.5);
     padding: 5px;
@@ -249,4 +249,6 @@ export const ProfileContainer = styled.div`
     align-items: center;
     padding-bottom: 10px;
     border: var(--std_border);
+    overflow-x: scroll;
 `;
+

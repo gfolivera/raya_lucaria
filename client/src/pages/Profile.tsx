@@ -12,13 +12,14 @@ function Profile() {
 
   return (
     <>
-      <S.Heading2>Perfil</S.Heading2>
       <div>
         <div>
-          <S.Heading2>{`${user?.first_name} ${user?.last_name}`}</S.Heading2>
-        </div>
-        <div>
           <S.ProfileContainer>
+            <div>
+              <S.Heading1>{`${
+                user?.first_name ? user?.first_name : "Eleonora"
+              } ${user?.last_name ? user?.last_name : "Fonseca"}`}</S.Heading1>
+            </div>
             <S.Heading2>Cursos</S.Heading2>
             <S.Table>
               <tbody>
