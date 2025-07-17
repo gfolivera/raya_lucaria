@@ -23,7 +23,7 @@ interface Campus {
 
 interface showMsg {
   message: string;
-  type: "success" | "error" | "inform";
+  type: 0 | 1 | 2; // 0: success, 1: error, 2: inform
 }
 
 function Courses() {
@@ -34,22 +34,22 @@ function Courses() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [showMsg, setShowMsg] = useState<showMsg>({
     message: "theEndlessSporadicLifeCycle",
-    type: "inform",
+    type: 2,
   });
 
   const successMsg: showMsg = {
     message: "Matriculado com sucesso.",
-    type: "success",
+    type: 0,
   };
 
   const errorMsg: showMsg = {
     message: "error fetching request",
-    type: "error",
+    type: 1,
   };
 
   const informMsg: showMsg = {
     message: "Já matriculado no curso",
-    type: "inform",
+    type: 2,
   };
 
   // API CALL

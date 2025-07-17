@@ -13,7 +13,7 @@ interface UserFormState {
 
 interface DialogData {
   message: string;
-  type: "success" | "error" | "inform";
+  type: 0 | 1 | 2; // 0: success, 1: error, 2: inform
 }
 
 function CreateUser() {
@@ -27,10 +27,19 @@ function CreateUser() {
 
   const [formError, setFormError] = useState(false);
   const userDialogRef = useRef<HTMLDialogElement>(null);
+  const dialogCount = useRef(0);
   const [dialogMsg, setDialogMsg] = useState<DialogData>({
     message: "",
-    type: "inform",
+    type: 2,
   });
+  const successDialog: DialogData = {
+    type: 0,
+    message: "Cadastrado com sucesso.",
+  };
+  const errorDialog: DialogData = {
+    type: 1,
+    message: "Erro ao realizar cadastro.",
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -42,7 +51,7 @@ function CreateUser() {
     const emptyField = Object.values(formData).includes("");
     if (emptyField) {
       setDialogMsg({
-        type: "inform",
+        type: 2,
         message: "Por favor, preencha todos os campos.",
       });
     } else if (formData.password === formData.repeat_password) {
@@ -64,11 +73,11 @@ function CreateUser() {
         );
         console.log("AXIOS call finished.");
         if (response.data.status === "success") {
-          setDialogMsg({ type: "success", message: "Cadastrado com sucesso." });
+          setDialogMsg(successDialog);
         }
       } catch (error) {
         console.log(error);
-        setDialogMsg({ type: "error", message: "Erro ao realizar cadastro." });
+        setDialogMsg(errorDialog);
       }
     } else {
       setFormError(true);
@@ -76,7 +85,10 @@ function CreateUser() {
   };
 
   useEffect(() => {
-    controlDialog();
+    if (dialogCount.current > 0) {
+      controlDialog();
+    }
+    dialogCount.current++;
   }, [dialogMsg]);
 
   function controlDialog() {
