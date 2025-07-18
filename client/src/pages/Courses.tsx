@@ -29,6 +29,7 @@ interface showMsg {
 function Courses() {
   const { user, enrolled, getEnrolledCourses } = useUser();
   const [campi, setCampi] = useState<Campus[]>([]);
+  const [showCourseList, setShowCourseList] = useState<boolean[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [enrollButtonState, setEnrollButtonState] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -60,6 +61,10 @@ function Courses() {
         const response = await axios.get("/api/courses.php");
         if (response.data.success) {
           setCampi(response.data.campi);
+          const showArray: boolean[] = new Array(
+            response.data.campi.length
+          ).fill(false);
+          setShowCourseList(showArray);
         } else {
           console.error(
             "Error fetching courses. response.data doesn't contain success."
@@ -77,10 +82,17 @@ function Courses() {
     }
   }, []);
 
+  function handleShowCoursesClick(campusIndex: number): void {
+    const newState = [...showCourseList];
+    newState[campusIndex] = !showCourseList[campusIndex];
+    setShowCourseList(newState);
+  }
+
   useEffect(() => {
     user ? setEnrollButtonState(true) : setEnrollButtonState(false);
   }, [user]);
 
+  // MESSAGE DIALOG
   function toggleDialog() {
     if (!dialogRef) {
       return;
@@ -88,7 +100,7 @@ function Courses() {
     dialogRef.current?.hasAttribute("open")
       ? dialogRef.current.close()
       : dialogRef.current?.showModal();
-    console.log(JSON.stringify(showMsg));
+    //    console.log(JSON.stringify(showMsg));
   }
 
   const handleCourseClick = (course: Course) => {
@@ -149,18 +161,22 @@ function Courses() {
         <h2>Campi</h2>
         {campi.map((campus, campusIndex) => (
           <div key={campusIndex}>
-            <h3>{campus.campus_name}</h3>
-            <ul>
-              {campus.courses.map((course, courseIndex) => (
-                <li
-                  key={courseIndex}
-                  style={{ cursor: "pointer", marginBottom: "0.5rem" }}
-                  onClick={() => handleCourseClick(course)}
-                >
-                  {course.course_name}
-                </li>
-              ))}
-            </ul>
+            <button onClick={() => handleShowCoursesClick(campusIndex)}>
+              {campus.campus_name}
+            </button>
+            <S.Ul $show={showCourseList[campusIndex]}>
+              <div>
+                {campus.courses.map((course, courseIndex) => (
+                  <li
+                    key={courseIndex}
+                    style={{ cursor: "pointer", marginBottom: "0.5rem" }}
+                    onClick={() => handleCourseClick(course)}
+                  >
+                    {course.course_name}
+                  </li>
+                ))}
+              </div>
+            </S.Ul>
           </div>
         ))}
       </div>

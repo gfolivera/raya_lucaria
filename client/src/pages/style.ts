@@ -45,21 +45,19 @@ export const StyledLink  = styled(Link)`
 `;
 
 // SIDEBAR
+interface Props{
+    $show: boolean | null;
+}
 
-export const SidebarContainer = styled.ul`
-    width: 250px;
-    background-color: #2c2c2c;
-    padding: 20px;
-    position: fixed;
-    left: 10px;
-    top: 50px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    list-style-type: none;
-`;
+export const Ul = styled.ul<Props>`
+  display: grid;
+  grid-template-rows: ${props => props.$show ? '1fr' : '0fr'};
+  transition: 300ms ease-in-out;
+
+  > div {
+    overflow: hidden;
+  }
+`
 
 export const SidebarContent = styled.li`
     background-color:rgb(167, 167, 167);
