@@ -4,249 +4,281 @@ import { Link } from "react-router-dom";
 // ====COMPONENTS====
 
 // NAVBAR
+export const NavContainer = styled.div`
+  display: block;
+  justify-items: center;
+  margin-bottom: 10px;
+`;
 
 export const StyledNav = styled.nav`
-    background-color: rgba(10,10,10,.1);
-    color: white;
-    vertical-align: text-top;
-    display:flex;
-    justify-content: center;
-    width: 100%;
-    border: var(--std_border);
+  vertical-align: text-top;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--border-clr);
+  border-radius: 10px;
 `;
 
-export const StyledLink  = styled(Link)`
-    color: whitesmoke;
-    margin: .15em;
-    padding: 2px 10px;
-    border-radius: 8px;
-    border: none;
-    background: transparent;
+export const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  color: var(--shadow);
+  margin: 0.15em;
+  padding: 2px 10px;
+  border-radius: 8px;
+  background: transparent;
+  outline-offset: 1px;
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: transparent;
+  transition: color 1s ease-in-out, outline 250ms ease-in-out;
+  &:hover {
     outline-offset: 2px;
-    outline-width: 2px;
-    outline-style: solid;
-    outline-color: transparent;
-    transition: background 1s ease-in-out, color 1s ease-in-out,
-                outline 250ms ease-in-out;
-
-
-    &:hover{
-        background: var(--shadow);
-        color: white;
-        outline-width: 2px;
-        outline-style: solid;
-        outline-offset: 2px;
-        outline-color: rgba(100,200,250,.5);
-    }
-    /* &:active{
-        background: var(--bg);
-        color: black;
-    } */
+    outline-color: var(--border-clr);
+  }
 `;
 
-// SIDEBAR
-interface Props{
-    $show: boolean | null;
+// ====PAGES====
+
+// HOME
+
+export const CardContainer = styled.div`
+  padding: 10px;
+  background-color: white;
+  display: inline-flex;
+  border-radius: 15px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  min-width: 150px;
+  justify-self: center;
+`;
+
+export const CardImageContainer = styled.div`
+  width: 300px;
+  min-width: 150px;
+  max-width: 600px;
+  border-radius: 10px;
+  margin: 5px;
+  flex: 1 1 300px;
+`;
+
+export const CardImage = styled.img`
+  display: flex;
+  width: 100%;
+  border-radius: 10px;
+`;
+
+export const CardTextContainer = styled.div`
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  min-width: 150px;
+  justify-content: space-between;
+  flex: 1 1 300px;
+`;
+
+// COURSES
+
+interface Props {
+  $show: boolean | null;
 }
 
 export const Ul = styled.ul<Props>`
   display: grid;
-  grid-template-rows: ${props => props.$show ? '1fr' : '0fr'};
+  grid-template-rows: ${(props) => (props.$show ? "1fr" : "0fr")};
   transition: 300ms ease-in-out;
-
+  margin: 0;
+  color: white;
   > div {
     overflow: hidden;
   }
-`
-
-export const SidebarContent = styled.li`
-    background-color:rgb(167, 167, 167);
-    width: 220px;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
 `;
 
-export const SidebarNestedContent = styled.li`
-    background-color:rgb(119, 119, 119);
-    width: 200px;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    display: flex;
-    cursor: pointer;
-    
+export const CampusCourse = styled.li`
+  cursor: pointer;
+  margin: 5px 0;
+  line-height: 1em;
+  :hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
 `;
 
 export const CourseContainer = styled.div`
-    background-color:rgb(59, 60, 63);
-    margin-left: 255px;
-    margin-top: 2px;
-    width: 900px;
-    height: 90vh;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  width: 100vw;
+`;
 
 export const CourseDescription = styled.div`
-    background-color:rgb(173, 175, 184);   
-    width: 80%;
-    height: 80%;
-    border-width: 5px;
-    border-style: solid;
-    border-radius: 10px;
-    
-`
+  background-color: rgb(173, 175, 184);
+  width: 80%;
+  height: 80%;
+  border-width: 5px;
+  border-style: solid;
+  border-radius: 10px;
+`;
 
+export const CampusContainer = styled.div`
+  border-radius: 8px;
+  border-style: solid;
+  box-sizing: border-box;
+  border-color: #988557;
+  border-width: 1px;
+  background-color: #988557;
+  margin-bottom: 10px;
+`;
 
-// ====PAGES====
+export const CampusButton = styled.button`
+  background: var(--bg);
+  color: black;
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+`;
 
-// CREATE USER
-
+// CREATE USER, LOGIN
 export const Container = styled.div`
-    height: 100%;
-    width: 100%;
-    background-color:rgba(116, 116, 116, 0.05);
-    display: flex;
-    justify-content: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 export const FormContainer = styled.form`
-    height: 500px;
-    width: 400px;
-    background-color: var(--div_bg);
-    position: relative;
-    margin: 60px auto;
-    border-radius: 8px;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 30px;
-    border: 2px solid rgba(10,10,10,.5);
+  height: 500px;
+  width: 400px;
+  background-color: var(--bg);
+  position: relative;
+  margin: 60px auto;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 30px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--border-clr);
 `;
 
 export const TextInput = styled.input`
-background: transparent;
-color: black;
-border: var(--std_border);
-font-family: inherit;
-transition: border-color 100ms 2s;
-&:focus{
-    border-color: rgba(10,10,80,.5);
-}
+  background: transparent;
+  border-color: var(--border-clr);
+  border-width: 1px;
+  border-style: solid;
+  font-family: inherit;
+  transition: border-color 100ms 2s;
+  color: var(--shadow);
+  &:focus {
+    outline: 2px solid black;
+    outline-offset: 1px;
+  }
 `;
 
 export const StyledButton = styled.button`
-//padding: .5em;
-color: white;
-background-color:var(--btn_bg);
-width: 5em;
-height: 2em;
-justify-content: center;
-align-items: center;
-display: flex;
+  background-color: var(--bg);
+  padding: 1rem 1.4rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: var(--shadow);
+  border: solid 1px var(--border-clr);
+  transition: 100ms ease-in-out;
+  &:hover {
+    background-color: var(--border-clr);
+  }
 
-&:hover{
-    background-color:rgb(31, 63, 124);
-}
-
-&:active{
-    background-color:rgb(20, 87, 150);
-}
+  &:active {
+    background-color: transparent;
+  }
 `;
 
 export const Heading1 = styled.h1`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
-
 
 export const Heading2 = styled.h2`
-display: flex;
-justify-content: center;
-z-index: 10;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
 `;
-
-
 
 export const Greet = styled.div`
-width: 100px;
-height: 75px;
-border-radius: 8px;
-background-color: var(--div_bg);
-color: white;
+  width: 100px;
+  height: 75px;
+  border-radius: 8px;
+  background-color: var(--bg);
 `;
 
+export const LoginTable = styled.table`
+  margin-bottom: 8px;
+`;
 
 // profile
 
 export const Table = styled.table`
-
-border-color: rgba(10,10,10,.7);
-border-width: 2px;
-border-style: solid;
-margin: 5px;
-border-radius: 8px;
-font-size: .8em;
-text-align: center;
-padding: 2px;
-th{
-    background: rgba(10,10,10,.5);
+  border-color: var(--bg);
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 8px;
+  width: max-content;
+  margin: 5px;
+  padding: 2px;
+  font-size: 0.8em;
+  text-align: center;
+  display: inline-block;
+  overflow: auto;
+  @media (max-width: 600px) {
+    width: 100vw;
+    height: 40vh;
+  }
+  th {
+    background: transparent;
     padding: 5px;
     text-align: center;
-    border-color: rgba(187, 217, 224, 0.75);
+    border-color: var(--bg);
     border-width: 2px;
     border-style: solid;
     border-radius: 5px;
-}
-td{
-    background:
-    linear-gradient(to bottom, var(--shadow), var(--bg));
+  }
+  td {
     padding: 0;
     font-size: inherit;
-    border-color: rgba(10,10,10,.7);
-    border-width: 2px;
-    border-style: solid;
     border-radius: 5px;
     justify-content: center;
     align-items: center;
     vertical-align: middle;
-}
+  }
+  tr:nth-child(even) {
+    background-color: var(--bg);
+  }
 
-thead{
+  thead {
     text-align: center;
-}
+  }
 
-select{
-width:100%;
-height: 100%;
-padding:0;
-background: var(--shadow);
-border-radius: 5px;
-border: 2px solid rgba(10,10,10,.7);
-option{
-    background-color: var(--shadow);
-    color: whitesmoke;
-}
-}
-
+  select {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: var(--bg);
+    border-radius: 5px;
+    border: 2px solid rgba(10, 10, 10, 0.7);
+  }
 `;
 
 export const ProfileContainer = styled.div`
-    /* height: 500px;
+  /* height: 500px;
     width: 800px; */
-    background-color: rgba(10,10,10,.1);
-    position: relative;
-    margin: 60px auto;
-    border-radius: 8px;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 10px;
-    border: var(--std_border);
-    overflow-x: scroll;
+  position: relative;
+  margin: 60px auto;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+  border: var(--border-clr);
 `;
-

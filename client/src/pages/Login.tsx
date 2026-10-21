@@ -65,13 +65,17 @@ function Login() {
     <S.Container>
       <S.FormContainer onSubmit={handleSubmit}>
         <S.Heading2>Login</S.Heading2>
-        <table>
+        <S.LoginTable>
           <tr>
             <th>
               <label htmlFor="">Usuário:</label>
             </th>
             <td>
-              <input type="text" name="username" onChange={handleChange} />
+              <S.TextInput
+                type="text"
+                name="username"
+                onChange={handleChange}
+              />
             </td>
           </tr>
           <tr>
@@ -79,10 +83,14 @@ function Login() {
               <label htmlFor="">Senha:</label>
             </th>
             <td>
-              <input type="password" name="password" onChange={handleChange} />
+              <S.TextInput
+                type="password"
+                name="password"
+                onChange={handleChange}
+              />
             </td>
           </tr>
-        </table>
+        </S.LoginTable>
         <S.StyledButton type="submit" name="submit">
           Login
         </S.StyledButton>

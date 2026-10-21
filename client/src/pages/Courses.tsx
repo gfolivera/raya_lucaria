@@ -149,7 +149,7 @@ function Courses() {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <S.CourseContainer>
       {/* Sidebar with campuses and courses */}
       <div
         style={{
@@ -160,10 +160,10 @@ function Courses() {
       >
         <h2>Campi</h2>
         {campi.map((campus, campusIndex) => (
-          <div key={campusIndex}>
-            <button onClick={() => handleShowCoursesClick(campusIndex)}>
+          <S.CampusContainer key={campusIndex}>
+            <S.CampusButton onClick={() => handleShowCoursesClick(campusIndex)}>
               {campus.campus_name}
-            </button>
+            </S.CampusButton>
             <S.Ul $show={showCourseList[campusIndex]}>
               <div>
                 {campus.courses.map((course, courseIndex) => (
@@ -177,7 +177,7 @@ function Courses() {
                 ))}
               </div>
             </S.Ul>
-          </div>
+          </S.CampusContainer>
         ))}
       </div>
 
@@ -221,7 +221,7 @@ function Courses() {
           <p>Selecione um curso para ver os detalhes.</p>
         )}
       </div>
-    </div>
+    </S.CourseContainer>
   );
 }
 export default Courses;

@@ -3,31 +3,31 @@ function TableHeading() {
     <>
       <tr>
         <th>
-          <label htmlFor="">Campus</label>
+          <label>Campus</label>
         </th>
         <th>
-          <label htmlFor="">Curso</label>{" "}
+          <label>Curso</label>
         </th>
         <th>
-          <label htmlFor="">Categoria</label>{" "}
+          <label>Categoria</label>
         </th>
         <th>
-          <label htmlFor="">Professor(a)</label>
+          <label>Professor(a)</label>
         </th>
         <th>
-          <label htmlFor="">Horas Restantes</label>
+          <label>Horas Restantes</label>
         </th>
         <th>
-          <label htmlFor="">Total de Horas </label>
+          <label>Total de Horas </label>
         </th>
         <th>
-          <label htmlFor="">Concluído</label>
+          <label>Concluído</label>
         </th>
         <th>
-          <label htmlFor="">Matriculado em</label>
+          <label>Matriculado em</label>
         </th>
         <th>
-          <label htmlFor="estudar">Estudar</label>
+          <label>Estudar</label>
         </th>
       </tr>
     </>
